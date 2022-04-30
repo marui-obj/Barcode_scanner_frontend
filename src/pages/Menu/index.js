@@ -12,7 +12,10 @@ const Menu = () => {
     return (
         <div className="menu">
             <MainButton title="Add new item" icon={<AddCircleOutlineOutlinedIcon className="Menu-icon"/>}/>
-            <MainButton title="Put-away" icon={<InventoryIcon className="Menu-icon"/>} />
+
+            <Link to="/put-away" style={{ textDecoration: 'none' }}>
+                <MainButton title="Put-away" icon={<InventoryIcon className="Menu-icon"/>} />
+            </Link>
             
             <Link to="/dispatch" style={{ textDecoration: 'none' }}>
                 <MainButton title="Dispatch" icon={<LocalShippingIcon className="Menu-icon"/>} />
