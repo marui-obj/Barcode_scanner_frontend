@@ -1,11 +1,13 @@
 import Menu from "./pages/Menu";
-import PutAway from "./pages/PutAway";
+import PutAwayQrcode from "./pages/PutAwayQrcode";
 import DispatchIndex from "./pages/DispatchIndex"
 import DispatchDetail from "./pages/DispatchDetail";
+import AddNewItem from "./pages/AddNewItem";
 
 const routes = [
     {path: '/', exact: true, name: "Main-Menu", component: Menu},
-    {path: '/put-away', exact: true, name: "Put-Away", component: PutAway},
+    {path: '/put-away', exact: true, name: "Put-Away", component: PutAwayQrcode},
+    {path: '/add-item', exact: true, name: "Add-Item", component: AddNewItem},
     {path: '/dispatch', exact: true, name: "Dispatch-index", component: DispatchIndex},
     {path: '/dispatch/:id', exact: true, name: "Dispatch-detail", component: DispatchDetail}
 ]

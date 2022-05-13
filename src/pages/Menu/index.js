@@ -11,7 +11,9 @@ import './index.css'
 const Menu = () => {
     return (
         <div className="menu">
-            <MainButton title="Add new item" icon={<AddCircleOutlineOutlinedIcon className="Menu-icon"/>}/>
+            <Link to="/add-item" style={{ textDecoration: 'none' }}>
+                <MainButton title="Add new item" icon={<AddCircleOutlineOutlinedIcon className="Menu-icon"/>}/>
+            </Link>
 
             <Link to="/put-away" style={{ textDecoration: 'none' }}>
                 <MainButton title="Put-away" icon={<InventoryIcon className="Menu-icon"/>} />
