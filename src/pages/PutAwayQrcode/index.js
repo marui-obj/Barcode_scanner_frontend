@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { QrReader } from 'react-qr-reader';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../components/Back-button";
 import { Button } from "@mui/material";
 import { Badge } from '@mui/material';
@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 const PutAwayQrcode = () => {
     const [camera, setCamera] = useState(false);
     const [resultList, setResultList] = useState([]);
+    let navigate = useNavigate();
 
     const handleResult = (result, error) => {
         if(error) console.log(error);
@@ -24,12 +25,12 @@ const PutAwayQrcode = () => {
                 setResultList(resultList => [...resultList, {id: data._id, name: data.name}]);
             })
             .catch(e =>{
-                console.log(e);
+                return console.log(e);
             });
         }
     }
     const handleSubmit = () => {
-        console.log(resultList);
+        if(resultList.length === 0) return;
         var htmlcontent = '' ;
         resultList.forEach(res => {
             htmlcontent += `<div style="background-color: #C4C4C4; margin-top: 5px; margin-bottom: 5px" >
@@ -51,7 +52,12 @@ const PutAwayQrcode = () => {
             confirmButtonText: 'Submit',
             cancelButtonText: 'Cancle',
             reverseButtons: true
-            }); 
+            })
+            .then((res) => {
+                if(res.isConfirmed){
+                    navigate( '/put-away/scan-location', { state: { resultList } } )
+                }
+            });
     };
 
     const thisProductExist = (product) => {
@@ -82,12 +88,12 @@ const PutAwayQrcode = () => {
             </Button>
         </div>
         <div style={{textAlign: "center", margin: "20px"}}>
-                <Badge badgeContent={resultList.length} color={"secondary"}>
-                    <Button variant={"outlined"} onClick={handleSubmit}>
-                        Submit
-                    </Button>
-                </Badge>
-            </div>
+            <Badge badgeContent={resultList.length} color={"secondary"}>
+                <Button variant={"outlined"} onClick={handleSubmit}>
+                    Submit
+                </Button>
+            </Badge>
+        </div>
     </div>
   );
 };
