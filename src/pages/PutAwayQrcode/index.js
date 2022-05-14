@@ -20,7 +20,8 @@ const PutAwayQrcode = () => {
             })
             .then(data => {
                 setCamera(false);
-                setResultList(resultList => [...resultList, {id: data._id, name: data.name, status: data.status, location: data.location, received_date: data.received_date, dispatched_date: data.dispatched_date}]);
+                if (thisProductExist(data)) throw new Error("This product already scan")
+                setResultList(resultList => [...resultList, {id: data._id, name: data.name}]);
             })
             .catch(e =>{
                 console.log(e);
@@ -40,9 +41,6 @@ const PutAwayQrcode = () => {
         Swal.fire({  
             title: '<strong>Put-away item</strong>',
             html:
-                // 'You can use <b>bold text</b>, ' +
-                // '<a href="//sweetalert2.github.io">links</a> ' +
-                // 'and other HTML tags',
                 htmlcontent,
             confirmButtonColor: '#5AB54B',
             cancelButtonColor: '#ED7B7B',
@@ -53,6 +51,14 @@ const PutAwayQrcode = () => {
             }); 
     };
 
+    const thisProductExist = (product) => {
+        // Check if product already scan
+        for(var i=0; i<resultList.length; i++){
+            console.log(resultList[i].id);
+            if (resultList[i].id === product._id) return true; 
+        }
+        return false;
+    }
 
   return (
     <div>
