@@ -32,7 +32,10 @@ const PutAwayQrcode = () => {
         console.log(resultList);
         var htmlcontent = '' ;
         resultList.forEach(res => {
-            htmlcontent += `<div style="background-color: #C4C4C4" >${res.name}</div>`
+            htmlcontent += `<div style="background-color: #C4C4C4; margin-top: 5px; margin-bottom: 5px" >
+                            <div> id: ${res.id} </div>
+                            <div> name: ${res.name} </div>
+                            </div>`
             console.log(htmlcontent);
         });
 
