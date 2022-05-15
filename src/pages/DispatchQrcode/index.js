@@ -49,7 +49,7 @@ const DispatchQrcode = (state) => {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' }
                 };
-                return fetch(`http://127.0.0.1:8000/products/${id}`, requestOptions);
+                return fetch(`${process.env.REACT_APP_DATABASE_API}/products/${id}`, requestOptions);
             }
         })
         .then(res => {

@@ -14,7 +14,7 @@ const PutAwayQrcode = () => {
     const handleResult = (result, error) => {
         if(error) console.log(error);
         if(result){
-            fetch(`http://127.0.0.1:8000/products/${result.text}`)
+            fetch(`${process.env.REACT_APP_DATABASE_API}/products/${result.text}`)
             .then(res =>{
                 if (res.status !== 200) throw new Error(res.status);
                 return res.json();
@@ -74,7 +74,6 @@ const PutAwayQrcode = () => {
         <Link to="/">
             <BackButton/>
         </Link>
-        <span>QR Scanner</span>
         {camera? <QrReader
             onResult={(result, error) => {
                 handleResult(result, error);

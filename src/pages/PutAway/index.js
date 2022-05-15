@@ -12,7 +12,7 @@ const PutAway = () => {
     const [resultDb, setResultDb] = useState([]);
     const onDetected = new_result => {
         setCamera(false);
-        fetch(`http://127.0.0.1:8000/products/${new_result}`)
+        fetch(`${process.env.REACT_APP_DATABASE_API}/products/${new_result}`)
         .then(res =>{
             if (res.status !== 200) throw new Error(res.status);
             return res.json();

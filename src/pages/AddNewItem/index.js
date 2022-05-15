@@ -47,7 +47,7 @@ const AddNewItem = () => {
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ name: data})
                     };
-                    return fetch(`http://127.0.0.1:8000/products/${count}`, requestOptions)
+                    return fetch(`${process.env.REACT_APP_DATABASE_API}/products/${count}`, requestOptions)
                 }
             })
             .then(res => {

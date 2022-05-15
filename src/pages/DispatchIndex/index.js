@@ -6,7 +6,7 @@ const DispatchIndex = () => {
     const [lists, setLists] = useState(null);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/tasks')
+        fetch(`${process.env.REACT_APP_DATABASE_API}/tasks`)
         .then(res => {
             return res.json();
         })

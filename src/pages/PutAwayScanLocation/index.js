@@ -45,7 +45,7 @@ const PutAwayScanLocation = (state) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 };
-                return fetch(`http://127.0.0.1:8000/products/location/${location}`, requestOptions)
+                return fetch(`${process.env.REACT_APP_DATABASE_API}/products/location/${location}`, requestOptions)
             }
         })
         .then(res => {

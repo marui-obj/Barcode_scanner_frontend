@@ -8,7 +8,7 @@ const DispatchDetail = () => {
     const [lists, setLists] = useState(null);
     const { id } = useParams();
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/tasks/' + id)
+        fetch(`${process.env.REACT_APP_DATABASE_API}/tasks/` + id)
         .then(res => {
             return res.json();
         })
