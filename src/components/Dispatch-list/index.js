@@ -5,7 +5,7 @@ const DispatchList = ({tasks}) => {
         <div>
             {tasks.map((task) => (
                 <div className="dispatch-list" style={{margin: "10px"}} key={task._id}>
-                    <Link to={'/dispatch/' + task._id} style={{ textDecoration: 'none' }}>
+                    <Link to={'/dispatch/' + task._id} style={{ textDecoration: 'none' }} state={{task}}>
                         <Button style={{flexDirection: 'column', backgroundColor: "#C4C4C4", alignItems: "flex-start", width: "100%"}}>
                             <div style={{display: "block"}}>id: {task._id} </div>
                             <div style={{display: "block"}}>Due date: {task.due_date}</div>
