@@ -66,7 +66,7 @@ const DispatchQrcode = (state) => {
         if(error) return console.log(error);
         if(result){
             if(result){
-                fetch(`http://127.0.0.1:8000/products/${result.text}`)
+                fetch(`${process.env.REACT_APP_DATABASE_API}/products/${result.text}`)
                 .then(res =>{
                     if (res.status !== 200) throw new Error(res.status);
                     return res.json();
