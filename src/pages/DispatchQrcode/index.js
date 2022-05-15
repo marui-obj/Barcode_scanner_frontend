@@ -27,6 +27,7 @@ const DispatchQrcode = (state) => {
 
     useEffect(() => {
         if(value === '') return;
+        console.log(value);
         var htmlcontent = '' ;
         htmlcontent = `<div style="background-color: #C4C4C4; margin-top: 5px; margin-bottom: 5px" >
                             <div> id: ${id} </div>
@@ -49,7 +50,7 @@ const DispatchQrcode = (state) => {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' }
                 };
-                return fetch(`${process.env.REACT_APP_DATABASE_API}/products/${id}`, requestOptions);
+                return fetch(`${process.env.REACT_APP_DATABASE_API}/products/${value._id}`, requestOptions);
             }
         })
         .then(res => {
