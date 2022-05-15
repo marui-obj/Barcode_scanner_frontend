@@ -50,7 +50,7 @@ const DispatchQrcode = (state) => {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' }
                 };
-                return fetch(`${process.env.REACT_APP_DATABASE_API}/products/${value._id}`, requestOptions);
+                return fetch(`${process.env.REACT_APP_DATABASE_API}/tasks/${value._id}`, requestOptions);
             }
         })
         .then(res => {
