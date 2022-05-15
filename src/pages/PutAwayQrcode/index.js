@@ -80,6 +80,7 @@ const PutAwayQrcode = () => {
                 handleResult(result, error);
             }}
             scanDelay={1000}
+            constraints={{"facingMode": 'environment'}}
             
         /> : false}
         <div style={{position: "sticky", bottom: "20px", textAlign: "center"}}>

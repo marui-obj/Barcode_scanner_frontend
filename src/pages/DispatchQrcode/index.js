@@ -1,29 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import BackButton from "../../components/Back-button";
 import { QrReader } from 'react-qr-reader';
 import { Link, useLocation } from "react-router-dom";
-import BackButton from "../../components/Back-button";
 import { Button } from "@mui/material";
 import Swal from "sweetalert2";
 
-const PutAwayScanLocation = (state) => {
+const DispatchQrcode = (state) => {
     const [camera, setCamera] = useState(false);
-    const [location, setLocation] = useState('');
+    const [value, setValue] = useState('');
     const location_router = useLocation();
 
-    useEffect(() => {
-        if (location === '') return;
-        var htmlcontent = '' ;
-        const products = location_router.state.resultList;
-        products.forEach(res => {
-            htmlcontent += `<div style="background-color: #C4C4C4; margin-top: 5px; margin-bottom: 5px" >
-                            <div> id: ${res.id} </div>
-                            <div> name: ${res.name} </div>
-                            </div>`
-            console.log(htmlcontent);
-        });
+    const productMap = (object) => {
+        return{
+            id: object._id,
+            name: object.name
+        }
+    }
+    const taskMap = (object) => {
+        return{
+            task_id: object._id
+        }
+    }
+    const { id, name } = productMap(location_router.state.product);
 
+    const redirect_path = `/dispatch`
+
+    useEffect(() => {
+        if(value === '') return;
+        var htmlcontent = '' ;
+        htmlcontent = `<div style="background-color: #C4C4C4; margin-top: 5px; margin-bottom: 5px" >
+                            <div> id: ${id} </div>
+                            <div> name: ${name} </div>
+                            </div>`
         Swal.fire({  
-            title: `<strong>All of this product will be save into ${location}</strong>`,
+            title: `<strong>Are you sure to dispatch this item?</strong>`,
             html:
                 htmlcontent,
             confirmButtonColor: '#5AB54B',
@@ -35,17 +45,11 @@ const PutAwayScanLocation = (state) => {
         })
         .then(res => {
             if(res.isConfirmed){
-                const payload = products.map((product) => {
-                    return{
-                        id: product.id
-                    }
-                });
                 const requestOptions = {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    headers: { 'Content-Type': 'application/json' }
                 };
-                return fetch(`http://127.0.0.1:8000/products/location/${location}`, requestOptions)
+                return fetch(`http://127.0.0.1:8000/products/${id}`, requestOptions);
             }
         })
         .then(res => {
@@ -55,31 +59,39 @@ const PutAwayScanLocation = (state) => {
         .then(res => {
             if(res.isConfirmed || res.isDismissed) window.location = "/";
         })
-        .catch(err => {
-            console.log(err);
-        })
-
-    }, [location]);
-
+    }, [value]);
     
 
     const handleResult = (result, error) => {
         if(error) return console.log(error);
         if(result){
-            setCamera(false)
-            setLocation(result)
+            if(result){
+                fetch(`http://127.0.0.1:8000/products/${result.text}`)
+                .then(res =>{
+                    if (res.status !== 200) throw new Error(res.status);
+                    return res.json();
+                })
+                .then(data => {
+                    setCamera(false);
+                    
+                    if (data._id !== id) throw new Error(`${id} !== ${data}`)
+                    setValue(data);
+                })
+                .catch(e =>{
+                    return console.log(e);
+                });
+            }
         }
     }
 
     return ( 
         <>
             <div className='header' style={{display: "flex"}}>
-                <Link to="/put-away">
+                <Link to={redirect_path}>
                     <BackButton/>
                 </Link>
-                <span style={{alignSelf: "center"}}>Scan location put away</span>
+                <span style={{alignSelf: "center"}}>Dispatch scan</span>
             </div>
-            <div>{console.log(location_router.state)}</div>
             {camera? <QrReader
             onResult={(result, error) => {
                 handleResult(result, error);
@@ -97,4 +109,4 @@ const PutAwayScanLocation = (state) => {
      );
 }
  
-export default PutAwayScanLocation;
+export default DispatchQrcode;
